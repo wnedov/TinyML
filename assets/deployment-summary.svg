@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="160" viewBox="0 0 1200 160" role="img" aria-labelledby="title desc">
+  <title id="title">TinyML deployment summary</title>
+  <desc id="desc">99.43 percent test accuracy, 9 to 10 millisecond on-device latency, 7.42 KiB runtime RAM, and 271,563 MACs per inference.</desc>
+  <style>
+    .box { fill: none; stroke: #d0d7de; stroke-width: 2; }
+    .value { fill: #1f2328; font: 500 29px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; }
+    .label { fill: #59636e; font: 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-anchor: middle; }
+    @media (prefers-color-scheme: dark) {
+      .box { stroke: #3d444d; }
+      .value { fill: #f0f6fc; }
+      .label { fill: #9198a1; }
+    }
+  </style>
+
+  <g transform="translate(20 20)">
+    <rect class="box" width="275" height="120" rx="4"/>
+    <text class="value" x="137.5" y="57">99.43%</text>
+    <text class="label" x="137.5" y="88">Test accuracy</text>
+  </g>
+  <g transform="translate(315 20)">
+    <rect class="box" width="275" height="120" rx="4"/>
+    <text class="value" x="137.5" y="57">9–10 ms</text>
+    <text class="label" x="137.5" y="88">On-device latency</text>
+  </g>
+  <g transform="translate(610 20)">
+    <rect class="box" width="275" height="120" rx="4"/>
+    <text class="value" x="137.5" y="57">7.42 KiB</text>
+    <text class="label" x="137.5" y="88">Runtime RAM</text>
+  </g>
+  <g transform="translate(905 20)">
+    <rect class="box" width="275" height="120" rx="4"/>
+    <text class="value" x="137.5" y="57">271,563</text>
+    <text class="label" x="137.5" y="88">MACs per inference</text>
+  </g>
+</svg>
