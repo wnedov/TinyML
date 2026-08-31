@@ -47,8 +47,7 @@ The complete target report is retained in [`artifacts/reports/stm32_validation.t
 
 ### Hardware latency
 
-Ten committed test samples completed in **9–10 ms per inference** on the STM32F446RE at 180 MHz. The firmware measures each `ai_network_run` call with `HAL_GetTick()` and writes the prediction, label, latency, and seven quantized outputs over UART.
-
+Ten committed test samples completed in **9–10 ms per inference** on the STM32F446RE at 180 MHz. The firmware measures each `ai_network_run` call with `HAL_GetTick()`.
 ## Quantization
 
 Static quantization uses calibration images to determine scales and zero points, then inserts quantize/dequantize operations into the ONNX graph. This allows supported operations to use lower-precision integer tensors, reducing the serialized model from 117,354 B to 37,919 B while changing test accuracy by only −0.0286 percentage points.
