@@ -2,15 +2,13 @@
 
 A 7-class MNIST CNN trained in PyTorch, statically quantized through ONNX, and deployed to an STM32F446RE using ST X-CUBE-AI.
 
-**99.43% test accuracy · 9–10 ms measured on-device inference · 7.42 KiB runtime RAM · 271,563 MACs**
+<p align="center"><img src="assets/deployment-summary.svg" alt="99.43% test accuracy, 9 to 10 millisecond on-device latency, 7.42 KiB runtime RAM, and 271,563 MACs per inference" width="100%"></p>
 
 The current model classifies digits **0–6**.
 
 ## Pipeline
 
-```text
-PyTorch training → ONNX export → static quantization → X-CUBE-AI code generation → STM32F446RE
-```
+<p align="center"><img src="assets/deployment-pipeline.svg" alt="PyTorch training to ONNX export, static quantization, X-CUBE-AI code generation, and STM32F446RE execution" width="100%"></p>
 
 The repository contains the training and conversion code, float and quantized model artifacts, X-CUBE-AI-generated network, STM32 application, validation report, and captured UART output.
 
@@ -45,13 +43,44 @@ X-CUBE-AI generated a deployment using **105.73 KiB of model weights** and **7.4
 | Input tensor | `uint8 [1,28,28,1]` |
 | Output tensor | `uint8 [1,7]` |
 
-The 37,919-byte ONNX file and the 108,268-byte generated weight array are different representations: the first is a serialized interchange model, while the second is the model data produced for the X-CUBE-AI runtime. The complete target report is retained in [`artifacts/reports/stm32_validation.txt`](artifacts/reports/stm32_validation.txt).
+The complete target report is retained in [`artifacts/reports/stm32_validation.txt`](artifacts/reports/stm32_validation.txt).
 
 ### Hardware latency
 
 Ten committed test samples completed in **9–10 ms per inference** on the STM32F446RE at 180 MHz. The firmware measures each `ai_network_run` call with `HAL_GetTick()` and writes the prediction, label, latency, and seven quantized outputs over UART.
 
-## On-device Demonstration
+## Quantization vs Embedded Deployment
+
+Quantization and deployment are separate stages with different outputs and measurements.
+
+| Stage | Input | Output | What its measurements describe |
+|---|---|---|---|
+| **Static quantization** | Float32 ONNX model plus calibration images | QDQ ONNX model with quantized tensors | ONNX file size, desktop accuracy, desktop ONNX Runtime latency |
+| **X-CUBE-AI deployment** | Quantized ONNX model | Generated C graph, weight arrays, runtime integration | Embedded weight storage, activation and I/O RAM, MACs, target latency |
+
+Static quantization inserts quantize/dequantize operations and calibrated scales into the ONNX graph. This reduces the serialized model from 117,354 B to 37,919 B while preserving accuracy within 0.0286 percentage points.
+
+X-CUBE-AI then translates that ONNX graph into code and data for its STM32 runtime. The generated deployment contains 108,268 B of weights; this is not the size of the ONNX file. Its convolution stages use `uint8`/`int8` operations, while the generated dense layers retain floating-point arrays, so the deployed graph is not described as wholly INT8.
+
+## What Runs on the Board
+
+The firmware executes ten MNIST images compiled into the STM32 project:
+
+1. Convert one 28×28 image into the network's 784-byte quantized input buffer.
+2. Call `ai_network_run` and measure the elapsed time with `HAL_GetTick()`.
+3. Select the largest of the seven output values as the predicted digit.
+4. Send the expected label, prediction, latency, and raw output values over UART.
+
+Each UART line has the following fields:
+
+| Field | Meaning |
+|---|---|
+| `label` | Expected digit stored with the test image |
+| `pred` | Class selected by the largest output value |
+| `latency` | Measured duration of `ai_network_run` |
+| `out` | Seven quantized output scores ordered by class 0 through 6; these are not probabilities |
+
+For example, Sample 3 has label 6. Its largest output value is the seventh value, 255, so the firmware predicts class 6.
 
 ```text
 Sample 0 (label=2): pred=2, latency=9ms, out=[162, 143, 255, 193, 98, 62, 134]
@@ -60,7 +89,7 @@ Sample 6 (label=1): pred=1, latency=10ms, out=[114, 255, 116, 121, 184, 77, 158]
 Sample 8 (label=0): pred=0, latency=10ms, out=[255, 84, 172, 110, 157, 100, 193]
 ```
 
-All ten captured predictions are correct in the committed demonstration. See [`artifacts/final_output.txt`](artifacts/final_output.txt) for the complete UART output.
+All ten captured predictions are correct in this demonstration. See [`artifacts/final_output.txt`](artifacts/final_output.txt) for the complete UART output.
 
 ## Model Architecture
 
@@ -75,21 +104,13 @@ The PyTorch model accepts a normalized 28×28 grayscale image and produces seven
   → Linear(100, 7)
 ```
 
-The ONNX model is statically quantized. X-CUBE-AI maps substantial parts of the generated graph to `uint8`/`int8` operations, but retains floating-point arrays in the dense layers; this repository therefore describes the result as a **quantized CNN with X-CUBE-AI-generated embedded inference**, rather than a wholly INT8 network.
-
-## Deployment Process
-
-1. Train the seven-class PyTorch model and retain the best validation checkpoint.
-2. Export the checkpoint to ONNX.
-3. Calibrate static ONNX quantization with MNIST samples.
-4. Import the quantized ONNX model into X-CUBE-AI and generate STM32 code.
-5. Build and flash the STM32CubeIDE project to the NUCLEO-F446RE.
-6. Run the ten embedded test images and monitor USART2 at 115200 baud.
+The quantized model and generated deployment formats are described separately above because they are different artifacts produced by different stages of the toolchain.
 
 ## Repository Structure
 
 ```text
 TinyML/
+├── assets/                      README metric summary and pipeline diagrams
 ├── training/                    PyTorch training, ONNX export, quantization, comparison
 ├── artifacts/                   Model files and measured results
 │   ├── reports/                 X-CUBE-AI target validation report

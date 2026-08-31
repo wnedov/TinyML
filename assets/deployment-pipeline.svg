@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="300" viewBox="0 0 1400 300" role="img" aria-labelledby="title desc">
+  <title id="title">Training-to-deployment pipeline</title>
+  <desc id="desc">A PyTorch seven-class CNN is exported to Float32 ONNX, statically quantized into a QDQ ONNX model, converted by X-CUBE-AI into a C graph and weight arrays, and executed on an STM32F446RE with UART measurements.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow-head" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+  <style>
+    .background { fill: #f6f8fa; }
+    .node { fill: #ffffff; stroke: #d0d7de; stroke-width: 2; }
+    .stage { fill: #0969da; font: 600 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .4px; }
+    .heading { fill: #1f2328; font: 600 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .detail { fill: #59636e; font: 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .arrow { fill: none; stroke: #59636e; stroke-width: 2.5; marker-end: url(#arrow); }
+    .arrow-head { fill: #59636e; }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #0d1117; }
+      .node { fill: #161b22; stroke: #3d444d; }
+      .stage { fill: #4493f8; }
+      .heading { fill: #f0f6fc; }
+      .detail { fill: #9198a1; }
+      .arrow { stroke: #9198a1; }
+      .arrow-head { fill: #9198a1; }
+    }
+  </style>
+  <rect class="background" width="1400" height="300" rx="10"/>
+
+  <path class="arrow" d="M 260 150 H 300"/>
+  <path class="arrow" d="M 540 150 H 580"/>
+  <path class="arrow" d="M 820 150 H 860"/>
+  <path class="arrow" d="M 1100 150 H 1140"/>
+
+  <g transform="translate(20 70)">
+    <rect class="node" width="240" height="160" rx="9"/>
+    <text class="stage" x="20" y="36">TRAIN</text>
+    <text class="heading" x="20" y="73">PyTorch CNN</text>
+    <text class="detail" x="20" y="108">7 classes</text>
+    <text class="detail" x="20" y="133">digits 0–6</text>
+  </g>
+
+  <g transform="translate(300 70)">
+    <rect class="node" width="240" height="160" rx="9"/>
+    <text class="stage" x="20" y="36">EXPORT</text>
+    <text class="heading" x="20" y="73">Float32 ONNX</text>
+    <text class="detail" x="20" y="108">117,354 B</text>
+    <text class="detail" x="20" y="133">portable model</text>
+  </g>
+
+  <g transform="translate(580 70)">
+    <rect class="node" width="240" height="160" rx="9"/>
+    <text class="stage" x="20" y="36">QUANTIZE</text>
+    <text class="heading" x="20" y="73">Static QDQ ONNX</text>
+    <text class="detail" x="20" y="108">37,919 B</text>
+    <text class="detail" x="20" y="133">calibrated model</text>
+  </g>
+
+  <g transform="translate(860 70)">
+    <rect class="node" width="240" height="160" rx="9"/>
+    <text class="stage" x="20" y="36">GENERATE</text>
+    <text class="heading" x="20" y="73">ST X-CUBE-AI</text>
+    <text class="detail" x="20" y="108">C graph</text>
+    <text class="detail" x="20" y="133">weights + runtime</text>
+  </g>
+
+  <g transform="translate(1140 70)">
+    <rect class="node" width="240" height="160" rx="9"/>
+    <text class="stage" x="20" y="36">RUN</text>
+    <text class="heading" x="20" y="73">STM32F446RE</text>
+    <text class="detail" x="20" y="108">9–10 ms inference</text>
+    <text class="detail" x="20" y="133">UART evidence</text>
+  </g>
+</svg>
