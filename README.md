@@ -20,12 +20,12 @@ Static ONNX quantization reduced the serialized model from 117,354 B to 37,919 B
 
 These measurements were collected with ONNX Runtime on a desktop CPU over 6,989 MNIST test images from classes 0–6.
 
-| ONNX artifact | Test accuracy | File size | Desktop CPU latency |
-|---|---:|---:|---:|
-| Float32 ONNX | 99.4563% | 117,354 B | 0.027977 ms/image |
-| Statically quantized ONNX | 99.4277% | 37,919 B | 0.040756 ms/image |
+| ONNX artifact | Test accuracy | File size |
+|---|---:|---:|
+| Float32 ONNX | 99.4563% | 117,354 B |
+| Statically quantized ONNX | 99.4277% | 37,919 B |
 
-The desktop measurement does not show a latency improvement from quantization; its purpose here is to compare accuracy and serialized size. Full measurements are retained in [`artifacts/model_comparison.json`](artifacts/model_comparison.json).
+Full measurements are retained in [`artifacts/model_comparison.json`](artifacts/model_comparison.json).
 
 ### Embedded deployment
 
