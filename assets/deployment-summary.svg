@@ -2,22 +2,18 @@
   <title id="title">TinyML deployment summary</title>
   <desc id="desc">The seven-class model reaches 99.43 percent test accuracy, runs in 9 to 10 milliseconds on an STM32F446RE, uses 7.42 KiB runtime RAM, and requires 271,563 MACs per inference.</desc>
   <style>
-    .background { fill: #f6f8fa; }
-    .panel { fill: #ffffff; stroke: #d0d7de; }
+    .panel { fill: none; stroke: #d0d7de; }
     .accent { fill: #0969da; }
     .value { fill: #1f2328; font: 600 31px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     .label { fill: #1f2328; font: 600 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     .detail { fill: #59636e; font: 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     @media (prefers-color-scheme: dark) {
-      .background { fill: #0d1117; }
-      .panel { fill: #161b22; stroke: #3d444d; }
+      .panel { stroke: #3d444d; }
       .accent { fill: #4493f8; }
       .value, .label { fill: #f0f6fc; }
       .detail { fill: #9198a1; }
     }
   </style>
-  <rect class="background" width="1200" height="250" rx="10"/>
-
   <g transform="translate(24 25)">
     <rect class="panel" width="270" height="200" rx="8"/>
     <rect class="accent" width="270" height="6" rx="3"/>
