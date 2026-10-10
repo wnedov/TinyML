@@ -1,6 +1,6 @@
 ST Edge AI Core v2.2.0-20266 2adc00962
-Created date          : 2025-08-16 22:04:31
-Parameters            : generate --target stm32f4 --name network -m /Users/wnedo/Desktop/Projects/TinyML/artifacts/tiny_mnist_best_quantized.onnx --compression none --verbosity 1 --no-inputs-allocation --no-outputs-allocation --workspace /var/folders/nv/w_7s3kv11v7gy879798zkddr0000gn/T/mxAI_workspace799582169755842915556563163096672 --output /Users/wnedo/.stm32cubemx/network_output
+Created date          : 2025-08-16 22:12:06
+Parameters            : generate --target stm32f4 --name network -m /Users/wnedo/Desktop/Projects/TinyML/artifacts/tiny_mnist_best_quantized.onnx --compression none --verbosity 1 --no-inputs-allocation --no-outputs-allocation --workspace /var/folders/nv/w_7s3kv11v7gy879798zkddr0000gn/T/mxAI_workspace804171582527095024046521631233106 --output /Users/wnedo/.stm32cubemx/network_output
 
 Exec/report summary (generate)
 --------------------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ c_name             :   network
 compression        :   none                                                                                               
 optimization       :   balanced                                                                                           
 target/series      :   stm32f4                                                                                            
-workspace dir      :   /var/folders/nv/w_7s3kv11v7gy879798zkddr0000gn/T/mxAI_workspace799582169755842915556563163096672   
+workspace dir      :   /var/folders/nv/w_7s3kv11v7gy879798zkddr0000gn/T/mxAI_workspace804171582527095024046521631233106   
 output dir         :   /Users/wnedo/.stm32cubemx/network_output                                                           
 model_fmt          :   ss/ua per channel                                                                                  
 model_name         :   tiny_mnist_best_quantized                                                                          
